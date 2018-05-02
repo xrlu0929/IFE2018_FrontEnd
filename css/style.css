@@ -1,0 +1,27 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color:#fcf2cb;
+  background-attachment: fixed;
+  color: #435b22;
+}
+
+h1 {
+  margin-bottom:0px;
+}
+h1:hover {
+  color: black;
+}
+
+h2{
+  text-transform:uppercase;
+}
+
+ul.square {
+  margin: 10px;
+  list-style: square;
+}
+
+ul.dot {
+  margin: 5px;
+  list-style-type:circle;
+}
