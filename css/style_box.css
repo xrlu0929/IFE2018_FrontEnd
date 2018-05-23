@@ -1,0 +1,40 @@
+body{
+	display: flex;
+	flex-direction: row;
+}
+
+
+
+.basic{
+	display: flex;
+	flex-direction: row;
+}
+.contact{
+	margin-left: auto;
+}
+.title{
+	width: 200px;
+	background-color: #71A1F9;
+	color: white;
+	text-align: center;
+	line-height: 3;
+}
+.content{
+	width: 800px;
+}
+.content>hr{
+	display: block;
+    margin-top: -1em;
+    margin-bottom: -1em;
+}
+.content>.basic>h1, h2{
+	margin-left: 30px;
+}
+
+.content>.basic>.contact>li{
+	list-style-type: none;
+}
+
+.square{
+	list-style: square;
+}
