@@ -1,0 +1,28 @@
+body{
+	margin:0px;
+}
+.title{
+	width: 800px;
+	background-color: #858585;
+	color: white;
+	padding:20px;
+}
+.content>.basic>h1, h2{
+	font-size: 15px;
+	width: 200px;
+	background-color: #D6D6D6;
+	padding:20px;
+	margin: 1px;
+	/*border-width: 2px ;
+	border-color:white;*/
+}
+.session, .basic{
+	display: flex;
+	flex-direction: row;
+}
+.box{
+	display: block;
+	width: 600px;
+	border-top: 1px #D6D6D6 solid;
+	border-bottom: 1px #D6D6D6 solid;
+}

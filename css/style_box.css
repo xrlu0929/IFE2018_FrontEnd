@@ -3,8 +3,6 @@ body{
 	flex-direction: row;
 }
 
-
-
 .basic{
 	display: flex;
 	flex-direction: row;
