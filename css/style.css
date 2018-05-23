@@ -15,11 +15,11 @@ h1:hover {
 h2{
   text-transform:uppercase;
 }
-ul.square {
+.square {
   margin: 10px;
-  list-style-image:url('https://png.icons8.com/metro/50/000000/ingredients-list.png');
+  list-style-image:square;
 }
-ul.dot {
+.dot {
   margin: 5px;
   list-style-type:circle;
 }
