@@ -1,5 +1,5 @@
 # IFE2018_FrontEnd
-0resume \n
-1page \n
-2animation \n
+0resume </br>
+1page </br>
+2animation </br>
 reference: https://segmentfault.com/a/1190000008658937
