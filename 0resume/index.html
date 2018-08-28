@@ -12,7 +12,7 @@
 </head>
 
 <body>
-  <div class="title"><h1>Resume</h1></div>
+  <div class="title" id="title"><h1>Resume</h1></div>
   <div class="content">
    <div class="basic">
    	<h1 id='name'>Anna Lu</h1>
@@ -80,6 +80,28 @@
     document.getElementById("name").onclick = function() {
         alert("Hi, You got it! My official name is Xinrui Lu~")
     }
+    
+    document.getElementById("title").onclick = function() {
+        var content = ""
+        
+        var d = new Date()
+        var time = d.getHours()
+        
+        if(time >=0 && time < 10) {
+           content = "早上好！"
+        } else if (time >=10 && time <= 12) {
+            content = "上午好~"
+        } else if (time < 18) {
+            content = "下午好！"
+        } else {
+            content = "晚上好"
+        }
+        alert(content)
+        
+        console.log(time)
+    }
+    
+    
 </script>
 </body>
 </html>
