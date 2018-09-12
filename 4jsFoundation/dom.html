@@ -7,7 +7,7 @@
 <body>        
     <div id="wrapper">
         <div id="news-top" class="section">
-            <h3>Some title</h3>
+            <h3>News Top</h3>
             <div class="content">
                 <ul>
                     <li><span>HTML</span><a href="">Some Link1</a></li>
@@ -19,8 +19,9 @@
             <img src="">
             <p class="">Some Text</p>
         </div>
+
         <div id="news-normal" class="section">
-            <h3>Some title</h3>
+            <h3>News Normal</h3>
             <div class="content">
                 <ul>
                     <li><span>HTML</span><a href="">Some Link1</a></li>
@@ -33,22 +34,93 @@
             <p class="">Some Text</p>
         </div>      
     </div>
+
+    <button onclick="getAllListItem()">All List Items</button>
+    
+    <br><br>
+    
+    <input type="text" name="section_input" placeholder="news-normal or news-top">
+
+    <button onclick="findAllHtmlSpanInOneSection()">All HTML Span in section</button>
+    
+    <br><br>
+
+    <button onclick="findListItem()">All HTML <input type='text' name='front-end-input' placeholder="HTML CSS JS"> in section</button>
+
+    <br><br>
+    <button onclick="reset()">Reset</button>
+    
     <script>
 
+    function reset() {
+        document.location.reload();
+    }
+
+
     function getAllListItem() {
-        // 返回页面中所有li标签
+        // step 1: 返回页面中所有li标签
+        // step 2: color li tags content -> red
+        console.log(document.querySelectorAll('li'))
+        var target = document.querySelectorAll('li')
+
+        for(var i = 0; i < target.length; i++) {
+            target[i].style.color = '#f27cb5';
+        }
+
     }
 
     function findAllHtmlSpanInOneSection(sectionId) {
         // 返回某个section下所有span中内容为HTML的span标签
+        var section_id = document.querySelector('[name="section_input"]').value;
+        console.log(document.querySelector('[name="section_input"]'))
+        console.log('section_id: '+section_id)
+        var section = document.getElementById(section_id);
+        console.log('section: '+section)
+        if(!section_id) {
+            alert('Please enter a valid section id.')
+            document.querySelector('[name="section_input"]').style.backgroundColor = 'yellow';
+        } else {
+            document.querySelector('[name="section_input"]').style.backgroundColor = '';
+            var target = section.querySelectorAll('span')
+            console.log(target)
+
+            for(var i = 0; i < target.length; i++) {
+                target[i].style.color = '#b256f6';
+            }
+
+        }
+        
     }
 
     function findListItem(sectionId, spanCont) {
         // 返回某个section下，所有所包含span内容为spanCont的LI标签
+        var section_id = document.querySelector('[name="section_input"]').value;
+        console.log(document.querySelector('[name="section_input"]'))
+        console.log('section_id: '+section_id)
+        var section = document.getElementById(section_id);
+        console.log('section: '+section)
+
+
+        if(!section_id) {
+            alert('Please enter a valid section id.')
+            document.querySelector('[name="section_input"]').style.backgroundColor = 'yellow';
+        } else {
+            document.querySelector('[name="section_input"]').style.backgroundColor = '';
+            var target = section.querySelectorAll('span')
+            console.log("target found")
+            console.log(target)
+
+            for(var i = 0; i < target.length; i++) {
+                target[i].style.backgroundColor = 'lightblue';
+            }
+
+        }
+        
     }
 
     function getActiveLinkContent(sectionId) {
         // 返回某个section下，class为active的链接中包含的文字内容
+
     }
 
     </script>
