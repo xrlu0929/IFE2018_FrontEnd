@@ -11,7 +11,7 @@
             <div class="content">
                 <ul>
                     <li><span>HTML</span><a href="">Some Link1</a></li>
-                    <li><span>JS</span><a class="active" href="">Some Link2</a></li>
+                    <li><span>JS</span><a class="active" href="#">Some Link2</a></li>
                     <li><span>CSS</span><a href="">Some Link3</a></li>
                     <li><span>JS</span><a href="">Some Link4</a></li>
                 </ul>
@@ -48,7 +48,16 @@
     <button onclick="findListItem()">All HTML <input type='text' name='front-end-input' placeholder="HTML CSS JS"> in section</button>
 
     <br><br>
+    <button onclick="getActiveLinkContent()">All Active Link Content in section</button>
+
+    <br>
+    <span id = 'linkResult'>result of hyper link here</span>
+
+
+    <br><br>
     <button onclick="reset()">Reset</button>
+
+    
     
     <script>
 
@@ -85,6 +94,7 @@
             console.log(target)
 
             for(var i = 0; i < target.length; i++) {
+                
                 target[i].style.color = '#b256f6';
             }
 
@@ -104,15 +114,21 @@
         if(!section_id) {
             alert('Please enter a valid section id.')
             document.querySelector('[name="section_input"]').style.backgroundColor = 'yellow';
+        
         } else {
             document.querySelector('[name="section_input"]').style.backgroundColor = '';
-            var target = section.querySelectorAll('span')
-            console.log("target found")
-            console.log(target)
 
-            for(var i = 0; i < target.length; i++) {
-                target[i].style.backgroundColor = 'lightblue';
+            var name = document.querySelector('[name="front-end-input"]').value
+            var allSpan = section.querySelectorAll('span')
+
+            for(var i = 0; i < allSpan.length; i++) {
+                
+                if (allSpan[i].textContent == name.toUpperCase()) {
+                    allSpan[i].style.backgroundColor = 'lightblue';
+                }
+                
             }
+
 
         }
         
@@ -120,6 +136,31 @@
 
     function getActiveLinkContent(sectionId) {
         // 返回某个section下，class为active的链接中包含的文字内容
+        var section_id = document.querySelector('[name="section_input"]').value;
+        console.log(document.querySelector('[name="section_input"]'))
+        console.log('section_id: '+section_id)
+        var section = document.getElementById(section_id);
+        console.log('section: ')
+        console.log(section)
+        
+        if(!section_id) {
+            alert('Please enter a valid section id.')
+            document.querySelector('[name="section_input"]').style.backgroundColor = 'yellow';
+        } else {
+
+            var items = section.querySelectorAll('li');
+
+            for (var i = 0; i < items.length; i++) {
+                var item = items[i].querySelector('[class="active"]')
+                if (item) {
+                    item.style.backgroundColor = 'pink';
+                    console.log(item.href);
+                    document.getElementById('linkResult').innerHTML = item.href
+                }
+            }
+
+        }
+
 
     }
 
