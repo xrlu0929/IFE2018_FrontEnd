@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <style>
+        #content {
+            width: 480px;
+            margin: 0 auto;
+        }
+        #animate {
+            height: 480px;
+            width: 480px;
+            background: url(img/erik_ce204002.jpg) 0 0 no-repeat;
+        }
+        #btn {
+            margin-left: 45%;
+            margin-top: 20px;
+        }
+    </style>
+
+</head>
+<body>
+    <div id="content">
+        <div id="animate"></div>
+        <button id="btn">开始微笑</button>
+    </div>
+
+    <script type="text/javascript">
+        window.onload = () => {
+        let bgY = 0; //定义一个Y位置并赋初始值
+        let timer; //定义一个定时器的返回值
+        let oDiv = document.getElementById('animate'); //获取动画容器
+        let oBtn = document.getElementById('btn'); //获取按钮
+        oBtn.onclick = () => { //按钮点击事件
+            clearInterval(timer); //清除存在的定时器 防止定时器叠加
+            timer = setInterval( //定时器开启
+                () => {
+                    oDiv.style.backgroundPosition = '0 ' + bgY + 'px'; //将定义的Y位置赋值给position
+                    bgY -= 480; //Y位置每一次-480
+                    if (bgY == -7680) { //当到达雪碧图的最后一个图片时，返回第一个图片位置，让其不断循环
+                        bgY = 0;
+                    }
+                }, 100);
+    };
+};
+    </script>
+
+</body>
+</html>
