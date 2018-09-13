@@ -3,32 +3,52 @@
 <head>
     <meta charset="UTF-8">    
     <title>IFE ECMAScript</title>
+    <style>
+        select{
+        	display: none;
+        }
+    </style>
 </head>
-<body>
+<body>            
+    <label>
+        <input id="school" name="status" type="radio" onclick="display()">
+        School
+    </label>
+    <label>
+        <input id="company" name="status" type="radio" onclick="display()">
+        Company
+    </label>
 
-<input id="name" type="text" onkeypress="enter_click()" onkeydown="esc_clear()">    
-<button id="submit-btn" name="btn" onclick="output_name()">Submit</button>
+    <select id="school-select">        
+        <option>北京邮电大学</option>
+        <option>黑龙江大学</option>
+        <option>华中科技大学</option>
+    </select>
 
-	<script type="text/javascript">
-		function output_name() {
-			console.log(document.getElementById('name').value);
-		}
+    <select id="company-select">        
+        <option>百度</option>
+        <option>爱奇艺</option>        
+    </select>
 
-		function enter_click() {
-			if (event.keyCode == "13") {
-				output_name();
-			} else {
-				console.log(event.keyCode)
-			}
+    <script type="text/javascript">
+    	function display() {
+    		if(document.getElementById('school').checked) {
 
+	    		document.getElementById('school-select').style.cssText = 'display: block'
 
-		}
+	    		document.getElementById('company-select').style.cssText = 'display: none'
+    		} 
 
-		function esc_clear() {
-			//console.log(event.keyCode)
-			if(event.keyCode == "27") {
-				document.getElementById('name').value = ''
-			}
-		}
-	</script>
-</body>      
+    		if(document.getElementById('company').checked) {
+				document.getElementById('school-select').style.cssText = 'display: none'
+
+				document.getElementById('company-select').style.cssText = 'display: block'
+    		} 
+
+    	}
+    	
+
+    </script>
+</body>
+
+</html>   
