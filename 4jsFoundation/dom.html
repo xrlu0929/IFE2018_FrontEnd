@@ -136,6 +136,8 @@
 
     function getActiveLinkContent(sectionId) {
         // 返回某个section下，class为active的链接中包含的文字内容
+        reset();
+        
         var section_id = document.querySelector('[name="section_input"]').value;
         console.log(document.querySelector('[name="section_input"]'))
         console.log('section_id: '+section_id)
