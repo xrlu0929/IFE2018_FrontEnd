@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-9">
+	<title>IFE ECMAScript</title>
+</head>
+
+<body>
+	<div id="fade-obj" style="opacity:1;width:150px;height:150px;background:#000"></div>
+	<button id="fade-btn" >淡出</button>
+
+	<script type="text/javascript">
+		document.getElementById('fade-btn').onclick = function(event) {
+			event = window.event
+
+			var fadeObj = document.getElementById('fade-obj')
+			var fadeFlag = false; // for fade out
+			var inFlag = false; // for fade in
+			// fadeObj.style.opacity = "0.5"
+			if (fadeObj.style.opacity >= 1) {
+				fadeFlag = true;
+				setInterval(
+					function() {
+						if(fadeFlag) {
+							fadeObj.style.opacity -= 0.002
+							console.log(fadeObj.style.opacity);
+							event.target.disabled = true;
+
+							if (fadeObj.style.opacity < 0) {
+								fadeFlag = false;
+								event.target.innerHTML = "淡入"
+								console.log("stopped");
+								event.target.disabled = false;
+
+								clearInterval();
+
+							}
+						}
+					}, 1
+				)
+			} else {
+				inFlag = true;
+				setInterval(
+					function() {
+						if(inFlag) {
+							//have to handle this to float, 
+							// otherwise it will be added as string
+							fadeObj.style.opacity = parseFloat(fadeObj.style.opacity) + 0.002
+							console.log(fadeObj.style.opacity);
+							event.target.disabled = true;
+
+							if (fadeObj.style.opacity >= 1) {
+								inFlag = false;
+								event.target.innerHTML = "淡出"
+								console.log("stopped");
+								event.target.disabled = false;
+								clearInterval();
+							}
+						}
+					}, 1
+				)
+			}
+
+		}
+	</script>
+</body>
+</html>
