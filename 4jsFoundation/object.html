@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset = "UTF-8">
+    <title>IFE ECMAScript</title>
+    <style type="text/css">
+        
+    </style>
+</head>
+<body>
+    <input type="text" name="name" id ="name" placeholder="name">
+    <button class="result" onclick="findIdByName()">RESULT</button>
+    <br>
+    <input type="number" name="id" id ="id" placeholder="id">
+    <button class="result" onclick="findNameById()">RESULT</button>
+    <br>
+
+    <p>result here</p>
+    <h1>遍历</h1>
+    <button onclick="getListWithDLR()">前序遍历</button>
+    <br>
+    <button onclick="getListWithLDR()">中序遍历</button>
+    <br>
+    <button onclick="getListWithLRD()">后序遍历</button>
+    <br>
+    <script type="text/javascript">
+
+var tree = {
+    "id": 0,
+    "name": "root",
+    "left": {
+        "id": 1,
+        "name": "Simon",
+        "left": {
+            "id": 3,
+            "name": "Carl",
+            "left": {
+                "id": 7,
+                "name": "Lee",
+                "left": {
+                    "id": 11,
+                    "name": "Fate"
+                }
+            },
+            "right": {
+                "id": 8,
+                "name": "Annie",
+                "left": {
+                    "id": 12,
+                    "name": "Saber"
+                }
+            }
+        },
+        "right": {
+            "id": 4,
+            "name": "Tony",
+            "left": {
+                "id": 9,
+                "name": "Candy"
+            }
+        }
+    },
+    "right": {
+        "id": 2,
+        "name": "right",
+        "left": {
+            "id": 5,
+            "name": "Carl",
+        },
+        "right": {
+            "id": 6,
+            "name": "Carl",
+            "right": {
+                "id": 10,
+                "name": "Kai"
+            }        
+        }
+    }
+}
+
+// 假设id和name均不会重复，根据输入name找到对应的id
+function findIdByName(name) {
+    name = document.getElementById('name').value
+    var obj=tree;
+    var id="";
+    function node(obj){
+       if(obj){ 
+        if(name==obj.name){
+            id=obj.id;
+        }else{
+            node(obj.left);
+            node(obj.right);
+        }
+    }}
+    node(obj);
+    console.log(id);
+}
+
+
+
+// 假设id和name均不会重复，根据输入id找到对应的name
+function findNameById(id) {
+    id = document.getElementById('id').value
+    var obj=tree;
+    var name="";
+    function node(obj){
+       if(obj){ 
+        if(id==obj.id){
+            name=obj.name;
+        }else{
+            node(obj.left);
+            node(obj.right);
+        }
+    }}
+    node(obj);
+    console.log(name);
+
+}
+
+// 把这个对象中所有的名字以“前序遍历”的方式全部输出到console中
+function getListWithDLR() {
+   var obj=tree;
+   var a=[];
+   function node(obj){
+    if(obj){
+        a.push(obj.name);
+        node(obj.left);
+        node(obj.right);
+    }
+   } node(obj);
+   console.log(a);
+} getListWithDLR();
+
+
+// 把这个对象中所有的名字以“中序遍历”的方式全部输出到console中
+function getListWithLDR() {
+    var obj = tree;
+    var a = [];
+    function node(obj) {
+        if(obj) {
+            node(obj.left);
+            a.push(obj.name);
+            node(obj.right);
+        }
+        
+    }node(obj);
+    console.log(a);
+} getListWithLDR();
+
+// 把这个对象中所有的名字以“后序遍历”的方式全部输出到console中
+function getListWithLRD() {
+    var obj = tree;
+    var a = []
+    function node(obj) {
+        if (obj) {
+            node(obj.left);
+            node(obj.right);
+            a.push(obj.name);
+        }
+    }node(obj);
+    console.log(a);
+}getListWithLRD();
+    </script>
+</body>
+
+</html>
