@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">    
+    <title>IFE ECMAScript-date</title>
+    
+    <style>
+        ul li {
+            list-style-type: none;
+            border: 1px solid grey;
+            margin: 2px;
+            text-align: left;
+            padding-left: 10px;
+        }
+        input {
+            line-height: 2;
+            width: 300px;
+        }
+        ul {
+            padding-left: 0px;
+        }
+        #email-sug-wrapper {
+            line-height: 2;
+            width: 310px;
+        }
+        ul {
+            background-color: white;
+        }
+
+    </style>
+</head>
+<body>        
+    
+<div class="wrapper">
+    <p>EMAIL:</p>
+    <input id="email-input" type="text">
+    <ul id="email-sug-wrapper" class="email-sug"></ul>
+</div>
+
+
+<script>
+
+    
+var postfixList = ['163.com', 'gmail.com', '126.com', 'qq.com', '263.net', 'yahoo.com'];
+        
+var currentOption = 0;
+//listener of user input
+
+document.getElementById('email-input').addEventListener('input', inputEvent)
+    
+function inputEvent() {
+    var value = inputValue();//获取输入
+    contentList = promptBox(value); //输入值重新拼接
+    addList(contentList);//添加到DOM
+    showPrompt(value);//生成提示框内容
+}
+    
+//获取输入
+function inputValue() {
+    var value = document.getElementById('email-input').value.trim();
+    value = value.replace(/&/g,"&amp;");
+    value = value.replace(/</g,"&lt;");
+    value = value.replace(/>/g,"&gt;");
+    value = value.replace(/ /g,"&nbsp;");
+    value = value.replace(/"/g,'&quot;');
+    return value;
+}
+
+//提示框内容
+function promptBox(value) {
+    var tempPostfixList = postfixList.slice(),
+        index = value.indexOf('@'),
+        postfix = '',
+        newPostfixList = [];
+    if (index !== -1) {
+        var tempValue = value;
+        value = tempValue.slice(0, index);
+        postfix = tempValue.slice(index + 1);
+        for (var i = 0; i < tempPostfixList.length; i++) {
+            if (tempPostfixList[i].slice(0, postfix.length) === postfix && postfix) {
+                newPostfixList.push(tempPostfixList[i]);
+            }
+        }
+        if (newPostfixList.length === 0) {
+            newPostfixList = tempPostfixList;
+        }
+    } else {
+        newPostfixList = tempPostfixList;
+    }
+    for (var j = 0; j < newPostfixList.length; j ++) {
+        newPostfixList[j] = value + '@' + newPostfixList[j];
+    }
+    return newPostfixList;
+}
+//将生成的内容添加到dom中
+function addList(valueList) {
+    var li = '';
+    for (option of valueList) {
+        li += `<li>${option}</li>`;
+    }
+    document.getElementById('email-sug-wrapper').innerHTML = li;
+}
+//控制提示框显隐
+function showPrompt(value) {
+    if (value) {
+        document.getElementById('email-sug-wrapper').style = 'display: block;';
+    } else {
+        document.getElementById('email-sug-wrapper').style = 'display: none;';
+    }
+}
+//监听鼠标点击事件
+document.getElementById('email-sug-wrapper').addEventListener('click', clickEvent);
+function clickEvent(e) {
+    var value = e.target.innerText;
+    value = value.replace(/&amp;/g,"&");
+    value = value.replace(/&lt;/g,"<");
+    value = value.replace(/&gt;/g,">");
+    value = value.replace(/&nbsp;/g," ");
+    value = value.replace(/&quot/g,"'");
+    document.getElementById('email-input').value = value;
+    document.getElementById('email-sug-wrapper').style = 'display: none;';
+    focusEvent();
+}
+//键盘上下控制style
+function keyStyle() {
+    var liStyle = document.querySelectorAll('li');
+    for (item of liStyle) {
+        item.style.backgroundColor = 'white';
+    }
+    liStyle[currentOption].style.backgroundColor = 'pink';
+}
+//监听键盘事件
+document.getElementById('email-input').addEventListener('keydown', keyEvent)
+function keyEvent(e) {
+    var index = postfixList.length;
+    if (e.keyCode === 40) {//下
+        if (currentOption === index - 1) {
+            currentOption = 0;
+        } else {
+            currentOption += 1;
+        }
+        keyStyle();
+        e.preventDefault();
+    } else if (e.keyCode === 38) {//上
+        if (currentOption === 0) {
+            currentOption = index - 1;
+        } else {
+            currentOption -= 1;
+        }
+        keyStyle();
+        e.preventDefault();
+    } else if (e.keyCode === 13) {//enter
+        document.getElementById('email-input').value = contentList[currentOption];
+        document.getElementById('email-sug-wrapper').style = 'display: none;';
+        focusEvent();
+    } else if (e.keyCode === 27) {//esc
+        document.getElementById('email-input').select();
+    }
+}
+//获取焦点事件
+function focusEvent() {
+    document.getElementById('email-input').focus();
+}
+//mouseover style
+document.getElementById('email-sug-wrapper').addEventListener('mouseover', mouseoverStyle);
+function mouseoverStyle(e) {
+    var li = document.querySelectorAll('li');
+     for (item of li) {
+        item.style.backgroundColor = 'white';
+    }
+    
+    if (e.target.tagName == "LI") {
+        e.target.style.backgroundColor = 'skyblue';
+    }
+    console.log(e.target.tagName)
+    console.log(e.target.style)
+//    e.target.style.backgroundColor = 'skyblue';
+    
+}
+</script>
+</body>
+</html>
+
