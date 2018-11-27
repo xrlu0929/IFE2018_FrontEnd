@@ -7,70 +7,29 @@
 <body>
 
 <h4>信息查询表</h4>
-
+<select id="region-select" onChange="write_table()"></select>
+<p></p>
 <div id="table-wrapper">
 </div>
 
     
-    
+<script src="ife31data.js"></script>   
 <script>
-    //data
-    let sourceData = [{
-        product: "手机",
-        region: "华东",
-        sale: [120, 100, 140, 160, 180, 185, 190, 210, 230, 245, 255, 270]
-    }, {
-        product: "手机",
-        region: "华北",
-        sale: [80, 70, 90, 110, 130, 145, 150, 160, 170, 185, 190, 200]
-    }, {
-        product: "手机",
-        region: "华南",
-        sale: [220, 200, 240, 250, 260, 270, 280, 295, 310, 335, 355, 380]
-    }, {
-        product: "笔记本",
-        region: "华东",
-        sale: [50, 60, 80, 110, 30, 20, 70, 30, 420, 30, 20, 20]
-    }, {
-        product: "笔记本",
-        region: "华北",
-        sale: [30, 35, 50, 70, 20, 15, 30, 50, 710, 130, 20, 20]
-    }, {
-        product: "笔记本",
-        region: "华南",
-        sale: [80, 120, 130, 140, 70, 75, 120, 90, 550, 120, 110, 100]
-    }, {
-        product: "智能音箱",
-        region: "华东",
-        sale: [10, 30, 4, 5, 6, 5, 4, 5, 6, 5, 5, 25]
-    }, {
-        product: "智能音箱",
-        region: "华北",
-        sale: [15, 50, 15, 15, 12, 11, 11, 12, 12, 14, 12, 40]
-    }, {
-        product: "智能音箱",
-        region: "华南",
-        sale: [10, 40, 10, 6, 5, 6, 8, 6, 6, 6, 7, 26]
-    }]
-    
     //write options
     let source_length = sourceData.length
     //group region
     var option_region =["华东", "华西", "华南", "华北", "华中"]
     
-    
-    
     function options() {
-        document.write('<select id="region-select" onChange="select_region()">  ')
+        var selector_text = ''
+        var selector = document.querySelector("#region-select") 
         var i = 0;
-        for (i; i<option_region.length; i++) {
+        for (i; i < option_region.length; i++) {
 //            document.write("<option value='" + option_region[i] + "'>")
-            document.write("<option>")
-            document.write(option_region[i])
-            document.write("</option>")
-            
+            selector_text = selector_text + "<option>" + option_region[i] + "</option>"
         }
-        document.write('</select>')
+        selector.innerHTML = selector_text
+       
     }
     
     options()
@@ -79,6 +38,7 @@
     var region = document.querySelector("#region-select")
     
     function get_region(){
+        
         var reindex = region.selectedIndex
         var retxt = region.options[reindex].text
         console.log(retxt)
@@ -99,8 +59,32 @@
         return selectedData
     }
 
-    
-//    console.log(get_region())
+    function write_table(){
+        //options()
+        var text = '<table ><tr><th>产品</th><th>产地</th><th>销量</th></tr>'
+        text = text + '<tr><th></th><th></th>'
+        for (var i = 0; i < 12; i++) {
+            text = text + '<th>' + (i+1) +'</th>'
+        }
+        text = text + '</tr>'
+        var selectedData = select_region()
+        
+        for (var i = 0; i < selectedData.length ; i++) {
+            text = text +'<tr><th>'+ selectedData[i].product + '</th><th>' + selectedData[i].region+'</th>'
+            for (var j = 0; j < 12; j++) {
+                console.log(selectedData[i].sale)
+                text = text + '<th>'+selectedData[i].sale[j] + '</th>'
+            }
+            text = text + '</tr>'
+            
+            console.log(selectedData[i].product)
+            console.log(selectedData[i].region)
+            
+        }
+        text = text + '</table>'
+        var table = document.querySelector("#table-wrapper") 
+        table.innerHTML=text
+    }
     
 </script>
 </body>
