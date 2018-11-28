@@ -1,0 +1,39 @@
+body{
+    font-family: sans-serif;
+}
+
+select{
+    margin: 20px;
+    width: 100px;
+    height: 30px;
+    font-size: 12px;
+}
+
+table{
+    border: 1px solid grey; 
+}
+button{
+    height: 30px;
+    margin-top: 20px;
+    background-color: gainsboro;
+}
+
+td{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.product {
+    padding-left: 20px;
+    padding-right: 30px;
+}
+
+.region {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.selectors {
+    display:flex;
+    flex-direction: row;
+}

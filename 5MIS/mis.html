@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">    
     <title>MIS</title>
+    
+     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <h4>信息查询表</h4>
-<select id="region-select" onChange="write_table()"></select>
+    <div class='selectors'>
+        <select id="region-select"></select>
+        <select id="product-select"></select>
+        <button onclick="write_table()">查询</button>
+    </div>
+
 <p></p>
 <div id="table-wrapper">
 </div>
@@ -20,8 +27,8 @@
     //group region
     var option_region =["华东", "华西", "华南", "华北", "华中"]
     
-    function options() {
-        var selector_text = ''
+    function region_options() {
+        var selector_text = '<option>全部</option>'
         var selector = document.querySelector("#region-select") 
         var i = 0;
         for (i; i < option_region.length; i++) {
@@ -32,7 +39,28 @@
        
     }
     
-    options()
+    region_options()
+    
+    function product_options(){
+        var product_list = []
+        for (var i = 0; i < source_length; i++) {
+            if (!product_list.includes(sourceData[i].product)){
+                product_list.push(sourceData[i].product)
+            }
+        }
+        console.log(product_list)
+        var list_size = product_list.length
+        
+        var selector_text = '<option>全部</option>'
+        var selector = document.querySelector("#product-select")
+        for(var j = 0; j < list_size; j++) {
+            selector_text = selector_text + "<option>" + product_list[j] + "</option>"
+        }
+        selector.innerHTML = selector_text
+        
+    }
+    
+    product_options()
     
     // select region
     var region = document.querySelector("#region-select")
@@ -42,48 +70,82 @@
         var reindex = region.selectedIndex
         var retxt = region.options[reindex].text
         console.log(retxt)
+        
         return retxt
+    }
+    
+    var product = document.querySelector("#product-select")
+    function get_product(){
+        var proindex = product.selectedIndex
+        var protxt = product.options[proindex].text
+        console.log(protxt)
+        
+        return protxt
     }
     
     
     function select_region() {
         var selectedData = []
         var retxt = get_region()
-        
-        for(i=0;i<source_length;i++){
+        var protxt = get_product()
+        if (retxt == "全部" && protxt == "全部") {
+            selectedData = sourceData
+        } else if (protxt == "全部" && retxt != "全部"){
+            for(i=0;i<source_length;i++){
             if(sourceData[i].region == retxt){
                 selectedData.push(sourceData[i])
+                }
             }
+        }else if (protxt != "全部" && retxt == "全部") {
+            for(i=0;i<source_length;i++){
+            if(sourceData[i].product == protxt){
+                selectedData.push(sourceData[i])
+                }
+            }      
+        } else {
+            for(i=0;i<source_length;i++){
+            if(sourceData[i].product == protxt && sourceData[i].region == retxt){
+                selectedData.push(sourceData[i])
+                }
+            }  
         }
+        
         console.log(selectedData)
         return selectedData
     }
 
     function write_table(){
         //options()
-        var text = '<table ><tr><th>产品</th><th>产地</th><th>销量</th></tr>'
-        text = text + '<tr><th></th><th></th>'
-        for (var i = 0; i < 12; i++) {
-            text = text + '<th>' + (i+1) +'</th>'
-        }
-        text = text + '</tr>'
         var selectedData = select_region()
-        
-        for (var i = 0; i < selectedData.length ; i++) {
-            text = text +'<tr><th>'+ selectedData[i].product + '</th><th>' + selectedData[i].region+'</th>'
-            for (var j = 0; j < 12; j++) {
-                console.log(selectedData[i].sale)
-                text = text + '<th>'+selectedData[i].sale[j] + '</th>'
-            }
+        if(selectedData.length > 0) {
+            var text = '<table><tr><th class="product">产品</th><th>产地</th><th columnspan="12" style="text-align:center;">销量</th></tr>'
+            text = text + '<tr><th></th><th></th>'
+            for (var i = 0; i < 12; i++) {
+                text = text + '<th>' + (i+1) + '月' +'</th>'
+                }
             text = text + '</tr>'
-            
-            console.log(selectedData[i].product)
-            console.log(selectedData[i].region)
-            
+        
+        
+            for (var i = 0; i < selectedData.length ; i++) {
+                text = text +'<tr><td class="product">'+ selectedData[i].product + '</td><td class="region">' + selectedData[i].region+'</td>'
+                for (var j = 0; j < 12; j++) {
+                    console.log(selectedData[i].sale)
+                    text = text + '<td class="sale">'+selectedData[i].sale[j] + '</td>'
+                }
+                text = text + '</tr>'
+
+                console.log(selectedData[i].product)
+                console.log(selectedData[i].region)
+
+            }
+            text = text + '</table>'
+            var table = document.querySelector("#table-wrapper") 
+            table.innerHTML=text
+        } else {
+            var table = document.querySelector("#table-wrapper") 
+            table.innerHTML="暂无数据！"
         }
-        text = text + '</table>'
-        var table = document.querySelector("#table-wrapper") 
-        table.innerHTML=text
+        
     }
     
 </script>
