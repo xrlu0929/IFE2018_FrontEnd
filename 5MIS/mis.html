@@ -118,7 +118,7 @@
         //options()
         var selectedData = select_region()
         if(selectedData.length > 0) {
-            var text = '<table><tr><th class="product">产品</th><th>产地</th><th columnspan="12" style="text-align:center;">销量</th></tr>'
+            var text = '<table><tr><th class="product">产品</th><th>产地</th><th colspan="12">销量</th></tr>'
             text = text + '<tr><th></th><th></th>'
             for (var i = 0; i < 12; i++) {
                 text = text + '<th>' + (i+1) + '月' +'</th>'
