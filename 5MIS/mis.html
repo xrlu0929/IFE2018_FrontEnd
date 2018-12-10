@@ -4,7 +4,7 @@
     <meta charset="UTF-8">    
     <title>MIS</title>
     
-     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -13,19 +13,25 @@
         <select id="region-select"></select>
         <select id="product-select"></select>
         <button onclick="write_table()">查询</button>
+<!--        <button onclick="draw()">查询</button>-->
     </div>
 
 <p></p>
 <div id="table-wrapper">
 </div>
+    
+<!--<p>华东手机销量</p>-->
+<canvas id='line' width="650" height="780">
+</canvas>
 
     
-<script src="ife31data.js"></script>   
+<script src="ife31data.js"></script>
+<script src="bar.js"></script>
 <script>
     //write options
     let source_length = sourceData.length
     //group region
-    var option_region =["华东", "华西", "华南", "华北", "华中"]
+    var option_region =["华东", "华南", "华北"]
     
     function region_options() {
         var selector_text = '<option>全部</option>'
@@ -117,7 +123,9 @@
     function write_table(){
         //options()
         var selectedData = select_region()
-        if(selectedData.length > 0) {
+        console.log("selectedData: ", selectedData)
+
+        if(selectedData && selectedData.length > 0) {
             var text = '<table><tr><th class="product">产品</th><th>产地</th><th colspan="12">销量</th></tr>'
             text = text + '<tr><th></th><th></th>'
             for (var i = 0; i < 12; i++) {
@@ -141,12 +149,70 @@
             text = text + '</table>'
             var table = document.querySelector("#table-wrapper") 
             table.innerHTML=text
+            /**
+            * draw canvas
+            */
+            var canvas = document.getElementById('line');
+            if (canvas.getContext){
+                
+                var ctx = canvas.getContext('2d');
+                //clear
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.moveTo(0, 0);
+                ctx.lineTo(0, 750)
+                ctx.strokeStyle = 'black';
+                ctx.stroke();
+                
+                ctx.moveTo(0, 750);
+                ctx.lineTo(600, 750)
+                ctx.stroke()
+                
+                for (let i = 0; i < 12; i++) {
+            ctx.strokeText((i + 1) + "月", i*50, 765);
+        }
+                for (let i = 1; i < 15; i++) {
+            ctx.strokeText(750 - i * 50, 0, 50*i);
+            ctx.moveTo(0, 50*i);
+            ctx.lineTo(600, 50*i)
+            ctx.stroke();
+                    
+        }
+                /*
+                * start draw out real data
+                */
+            for(var k=0; k < selectedData.length; k++){
+                for (var j =0; j < 12; j++){
+                    ctx.beginPath();
+                    if (j == 0) {
+                        ctx.moveTo(0, 750-selectedData[k].sale[j])
+                    } else {
+                        ctx.moveTo(50 * (j-1), 750-selectedData[k].sale[j-1])
+                    }
+                    ctx.lineTo(50 * j, 750-selectedData[k].sale[j])
+                    ctx.strokeStyle = setColor(selectedData[k]);
+                    ctx.stroke()
+                    
+                }
+                // text notes
+               ctx.beginPath();
+            ctx.fillStyle = setColor(selectedData[k])
+            ctx.strokeStyle = "gray";
+            ctx.arc( 560, (k+1) * 25 , 4, 0, Math.PI * 2, true);
+            ctx.fill();
+            ctx.strokeText(selectedData[k].product+"-"+selectedData[k].region, 570, (k+1) * 25 + 3);
+            }
+
+            }    
         } else {
             var table = document.querySelector("#table-wrapper") 
             table.innerHTML="暂无数据！"
         }
         
+        
+        
     }
     
 </script>
+
 </body>
