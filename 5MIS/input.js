@@ -29,10 +29,26 @@ function edit(){
         });
         
         td.addEventListener("click", (e)=>{
+           
             let target = e.target || e.srcElement;
             let input =  document.createElement("input");
             target.appendChild(input)
-        })
+            input.addEventListener('keypress', (e)=>{
+                var code = e.which || e.keyCode;
+                if (code == 13){
+                    console.log("enter")
+                    console.log(input.value)
+                    target.innerHTML = input.value;
+                    write_table()
+                } else{
+                    console.log("enter not working")
+                    return false;
+                }
+            })
+            
+        });
+        
+        
         
 
     }
