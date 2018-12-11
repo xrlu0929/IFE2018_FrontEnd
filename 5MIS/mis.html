@@ -27,6 +27,7 @@
     
 <script src="ife31data.js"></script>
 <script src="bar.js"></script>
+
 <script>
     //write options
     let source_length = sourceData.length
@@ -126,7 +127,7 @@
         console.log("selectedData: ", selectedData)
 
         if(selectedData && selectedData.length > 0) {
-            var text = '<table><tr><th class="product">产品</th><th>产地</th><th colspan="12">销量</th></tr>'
+            var text = '<table id="table"><tr><th class="product">产品</th><th>产地</th><th colspan="12">销量</th></tr>'
             text = text + '<tr><th></th><th></th>'
             for (var i = 0; i < 12; i++) {
                 text = text + '<th>' + (i+1) + '月' +'</th>'
@@ -138,8 +139,11 @@
                 text = text +'<tr><td class="product">'+ selectedData[i].product + '</td><td class="region">' + selectedData[i].region+'</td>'
                 for (var j = 0; j < 12; j++) {
                     console.log(selectedData[i].sale)
-                    text = text + '<td class="sale">'+selectedData[i].sale[j] + '</td>'
+                    text = text + '<td class="sale">'+selectedData[i].sale[j] +  '</td>'
+                    
                 }
+                
+//                '<div>Icons made by <a href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a> from <a href="https://www.flaticon.com/" 		    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 		    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>'
                 text = text + '</tr>'
 
                 console.log(selectedData[i].product)
@@ -149,6 +153,8 @@
             text = text + '</table>'
             var table = document.querySelector("#table-wrapper") 
             table.innerHTML=text
+            
+            edit()
             /**
             * draw canvas
             */
@@ -214,5 +220,5 @@
     }
     
 </script>
-
+<script src="input.js"></script>   
 </body>

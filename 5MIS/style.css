@@ -23,6 +23,17 @@ td{
     padding-left: 10px;
     padding-right: 10px;
 }
+table td:hover {
+    content: attr(data-attr);
+    display: block;
+    color: whitesmoke;
+    background-color: palevioletred; 
+}
+.img{
+    right: 0;
+    width: 10px;
+    height: 10px;
+}
 
 .product {
     padding-left: 20px;
